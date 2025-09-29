@@ -34,12 +34,10 @@ sequenceDiagram
     loop Archivos barrido nuevo
         Sistema->>Preproc: read_s1p_custom()
         Preproc->>Picos: extract_max_with_freq()
-        Sistema->>Modelo: predict_proba(características)
-        Modelo-->>Sistema: prob
-        Sistema->>Sistema: prob_suav = uniform_filter1d(prob)
-        Sistema->>Sistema: pred = (prob_suav > umbral)
+        Sistema->>Modelo: Calcular probabilidad
+        Sistema->>Modelo: Obtener predicción
     end
-    Sistema->>Visualizacion: Graficar resultados (prob_suav y pred)
+    Sistema->>Visualizacion: Graficar resultados (probabilidad y predicción)
     Sistema->>Visualizacion: Graficar máximos detectados en el barrido (ΔS11)
     Sistema->>Visualizacion: Graficar frecuencias de los picos en el barrido
     end
