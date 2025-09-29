@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant Usuario
     participant Sistema as Script Python
