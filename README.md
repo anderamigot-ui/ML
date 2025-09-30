@@ -1,43 +1,43 @@
 ```mermaid
 sequenceDiagram
-    participant Usuario
-    participant Sistema as Script Python
-    participant FS as Archivos .s1p
-    participant Preproc as Preprocesado S11
-    participant Picos as Extracción de Picos
+    participant User
+    participant System as Python Script
+    participant FS as .s1p Files
+    participant Preproc as S11 Preprocessing
+    participant Peaks as Peak Extraction
     participant Dataset as Dataset (Pandas)
-    participant Modelo as RandomForest
-    participant Barrido as Barrido nuevo
-    participant Visualizacion as Matplotlib
+    participant Model as RandomForest
+    participant Sweep as New Sweep
+    participant Visualization as Matplotlib
 
-    Usuario->>Sistema: Ejecutar script
+    User->>System: Execute script
 
     rect rgb(200, 240, 255)
-    note over Sistema: Entrenamiento
-    Sistema->>FS: seleccionar_archivos_por_rangos()
-    loop Archivos sin grieta
-        Sistema->>Preproc: read_s1p_custom()
-        Preproc->>Picos: extract_max_with_freq()
-        Sistema->>Dataset: Guardar características (label=0)
+    note over System: Training
+    System->>FS: select_files_by_ranges()
+    loop Files without crack
+        System->>Preproc: read_s1p_custom()
+        Preproc->>Peaks: extract_max_with_freq()
+        System->>Dataset: Save features (label=0)
     end
-    loop Archivos con grieta
-        Sistema->>Preproc: read_s1p_custom()
-        Preproc->>Picos: extract_max_with_freq()
-        Sistema->>Dataset: Guardar características (label=1)
+    loop Files with crack
+        System->>Preproc: read_s1p_custom()
+        Preproc->>Peaks: extract_max_with_freq()
+        System->>Dataset: Save features (label=1)
     end
-    Sistema->>Modelo: fit(X_train, y_train)
+    System->>Model: fit(X_train, y_train)
     end
 
     rect rgb(220, 255, 220)
-    note over Sistema: Predicción en test/barrido
-    Sistema->>Barrido: seleccionar_archivos_por_rangos()
-    loop Archivos barrido nuevo
-        Sistema->>Preproc: read_s1p_custom()
-        Preproc->>Picos: extract_max_with_freq()
-        Sistema->>Modelo: Calcular probabilidad
-        Sistema->>Modelo: Obtener predicción
+    note over System: Test / Sweep Prediction
+    System->>Sweep: select_files_by_ranges()
+    loop New sweep files
+        System->>Preproc: read_s1p_custom()
+        Preproc->>Peaks: extract_max_with_freq()
+        System->>Model: Compute probability
+        System->>Model: Obtain prediction
     end
-    Sistema->>Visualizacion: Graficar resultados (probabilidad y predicción)
-    Sistema->>Visualizacion: Graficar máximos detectados en el barrido (ΔS11)
-    Sistema->>Visualizacion: Graficar frecuencias de los picos en el barrido
+    System->>Visualization: Plot results (probability and prediction)
+    System->>Visualization: Plot detected maxima in sweep (ΔS11)
+    System->>Visualization: Plot peak frequencies in sweep
     end
